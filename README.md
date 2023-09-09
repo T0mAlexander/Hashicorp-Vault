@@ -148,7 +148,7 @@ vault kv put secret/[caminho] [chave]=[valor]
 
 **5** Crie um arquivo de configuração básico
 
-```json
+```js
 // vault-config.hcl
 
 storage "raft" {
