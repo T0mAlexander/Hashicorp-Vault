@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  vault:
+    image: hashicorp/vault:latest
+    container_name: vault-server
+    ports:
+      - 8200:8200
+    volumes:
+      - ./vault/config:/vault/config
+    cap_add:
+      - IPC_LOCK
+    entrypoint: vault server -config=/vault/config/vault.json
+    networks:
+      - vault-bridge
+
+  ssh:
+    build: ssh/.
+    ports:
+      - 3000:22
+    networks:
+      - vault-bridge
+
+  mariadb:
+    image: mariadb:latest
+    environment: 
+      MYSQL_ROOT_PASSWORD: mysql
+    ports:
+      - 3306:3306
+    networks:
+      - vault-bridge
+
+  jenkins:
+    image: jenkins/jenkins:lts-jdk11
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    networks:
+      - vault-bridge
+
+networks:
+  vault-bridge:
+    driver: bridge
+    ipam:
+      driver: default

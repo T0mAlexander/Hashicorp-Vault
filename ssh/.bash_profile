@@ -1,0 +1,1 @@
+export VAULT_ADDR=http://localhost:8200
