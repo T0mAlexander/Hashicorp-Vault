@@ -5,10 +5,11 @@ services:
     ports:
       - 8200:8200
     volumes:
-      - ./vault/config:/vault/config
+      - ./vault:/vault/
     cap_add:
       - IPC_LOCK
-    entrypoint: vault server -config=/vault/config/vault.json
+    command: [ "mkdir -p /vault/data" ]
+    entrypoint: vault server -config=/vault/config.hcl
     networks:
       - vault-bridge
 

@@ -1,1 +1,1 @@
-export VAULT_ADDR=http://localhost:8200
+export VAULT_ADDR=http://vaultserver:8200

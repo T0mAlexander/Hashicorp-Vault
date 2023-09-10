@@ -1,9 +1,10 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y openssh-server unzip
-COPY vault-config.hcl /etc/vault-ssh-helper.d/vault-config.hcl
-COPY vault-setup.sh /root/vault-setup.sh
-COPY .bash_profile /root/.bash_profile
+WORKDIR /root
+RUN apt-get update && apt-get install -y openssh-server iputils-ping unzip
+COPY config.hcl /etc/vault-ssh-helper.d/config.hcl
+COPY vault-setup.sh .
+COPY .bash_profile .
 
 RUN mkdir /var/run/sshd && \
   echo root:123 | chpasswd && \
